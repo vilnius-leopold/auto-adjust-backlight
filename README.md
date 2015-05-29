@@ -4,5 +4,5 @@ Simple script how to auto adjust screen brightness on startup on my Aspire V3-77
 
 Dependencies:
 ```
-xbacklight fswebcam imagemagick
+ruby xbacklight fswebcam imagemagick
 ```
