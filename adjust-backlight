@@ -1,0 +1,22 @@
+#!/usr/bin/ruby
+
+BACKLIGHT_MAX = 100
+BACKLIGHT_MIN = 10
+BACKLIGHT_DELTA = BACKLIGHT_MAX - BACKLIGHT_MIN
+
+LIGHT_LEVEL_MIN = 0
+LIGHT_LEVEL_MAX = 160
+LIGHT_LEVEL_DELTA = LIGHT_LEVEL_MAX - LIGHT_LEVEL_MIN
+
+puts ARGV
+
+current_light_level = ARGV[0].to_i
+
+backlight_level = (Math.log(current_light_level, 10)*45).round #BACKLIGHT_MIN + (BACKLIGHT_DELTA/LIGHT_LEVEL_DELTA) * current_light_level
+
+backlight_level = [backlight_level,10].max
+backlight_level = [backlight_level,100].min
+
+puts "Backlight level: #{backlight_level}"
+
+`xbacklight -set #{backlight_level}`

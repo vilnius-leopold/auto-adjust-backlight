@@ -1,0 +1,18 @@
+#!/bin/bash -e
+
+IMAGE=light-level.png
+PIXEL=light-level-pixel.png
+
+# take greyscale snapshot
+fswebcam --quiet --no-timestamp --png --no-overlay --no-banner -r 160x120 --greyscale $IMAGE
+
+# shrink to one pixel
+convert $IMAGE -resize 1x1 $PIXEL
+
+# get rgb 8bit grayscale light level value
+# between 0 and 255
+LIGHT_LEVEL=$(convert $PIXEL[1x1+0+0] -depth 8 txt: | grep "0,0:" | cut -d, -f 3)
+
+echo "LL: $LIGHT_LEVEL"
+
+/home/leo/bin/adjust-backlight $LIGHT_LEVEL
